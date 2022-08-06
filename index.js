@@ -7,6 +7,7 @@ const app = express();
 
 const quizzesController = require('./src/controllers/quizzes');
 const questionController = require('./src/controllers/questions');
+const choicesController = require('./src/controllers/choices');
 
 app.get('/',(req,res) =>{
     res.send("HOMEPAGE");
@@ -14,6 +15,7 @@ app.get('/',(req,res) =>{
 
 app.use('/quizzes', quizzesController);
 app.use('/questions', questionController);
+app.use('/choices', choicesController);
 
 app.listen(5000);
 console.log('listening on port 5000');
