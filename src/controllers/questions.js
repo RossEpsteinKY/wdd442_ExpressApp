@@ -31,14 +31,14 @@ router.get('/:id',(req,res) =>{
 
 
 router.post('/',(req,res) =>{
-    const { id, name } = req.body;
+    const { id, question } = req.body;
     console.log('body',req.body);
     try {
 
         questions.push(
             {
                 id: Number(id),
-                name: name
+                question: question
             }
 
         );
@@ -57,7 +57,7 @@ router.put('/:id',(req,res) =>{
         questions.map((q) => {
             if(id === q.id){
                     id: Number(id),
-                    q.name = req.body.name
+                    q.question = req.body.question
                 }
             return q;
             }

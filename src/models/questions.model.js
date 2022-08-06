@@ -1,15 +1,15 @@
 let questions = [
     {
         id: 1,
-        name: "What is your name?"
+        question: "What is your question?"
     },
     {
         id: 2,
-        name: "What Is Your Quest?"
+        question: "What Is Your Quest?"
     },
     {
         id: 3,
-        name: "What is the airspeed velocity of an unlaiden swallow?"
+        question: "What is the airspeed velocity of an unlaiden swallow?"
     }
 ]
 
