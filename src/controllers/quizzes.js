@@ -5,15 +5,8 @@ const {param} = require("express/lib/router");
 const bodyParser = require('body-parser');
 const app = express();
 let quizzes = require('../models/quizzes.model');
-
 app.use(bodyParser.urlencoded({ extended: false }))
-
-// parse application/json
-app.use(bodyParser.json())
-
 router.use(bodyParser.urlencoded({ extended: false }))
-
-// parse application/json
 router.use(bodyParser.json())
 
 router.get('/',(req,res) =>{
