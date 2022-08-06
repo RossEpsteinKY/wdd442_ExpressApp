@@ -11,6 +11,22 @@ router.get('/',(req,res) =>{
     res.json(quizzes);
 })
 
+router.get('/:id',(req,res) =>{
+    try {
+        const id = req.params.id;
+
+        let quiz = quizzes.find(quiz => quiz.id == id )
+
+        if(!quiz){
+            throw new Error('BROKEN');
+        }
+        res.json(quiz);
+    }
+    catch (e) {
+        res.send("ERROR: UNABLE TO FIND QUIZ ID " + req.params.id);
+    }
+})
+
 
 module.exports = router;
 
