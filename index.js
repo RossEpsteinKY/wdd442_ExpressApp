@@ -1,21 +1,13 @@
 const express = require('express');
+const router = express.Router();
 const {request, response} = require("express");
 const {param} = require("express/lib/router");
+const bodyParser = require('body-parser');
 const app = express();
 
-app.get('/products',(request,response) =>{
-    response.send("All products...");
+app.get('/',(req,res) =>{
+    res.send("HOMEPAGE");
 })
-
-app.post('/products',(request,response) =>{
-    response.send("Created a new product...");
-})
-
-app.put('/products/:id',(request,response) =>{
-    const id = request.params.id;
-    response.send("Updated product " + id + "...");
-})
-
 
 app.listen(5000);
 console.log('listening on port 5000');
