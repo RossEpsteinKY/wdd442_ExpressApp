@@ -23,12 +23,12 @@ router.get('/:id',async (req, res) => {
         const id = req.params.id;
         const question = await Questions.findByPk(id)
         if (!question) {
-            throw new Error('QUIZ NOT FOUND');
+            throw new Error('QUESTION NOT FOUND');
         }
         res.json(question);
         return;
     } catch (e) {
-        res.send("ERROR: UNABLE TO FIND QUIZ ID " + req.params.id, 404);
+        res.send("ERROR: UNABLE TO FIND QUESTION ID " + req.params.id, 404);
     }
 })
 
@@ -39,10 +39,10 @@ router.post('/',async (req, res) => {
 
         const {question} = req.body;
         const questions = await Questions.create({question})
-        // res.json(quiz);
+        // res.json(question);
         res.send('successfully created');
     } catch (e) {
-        res.send("ERROR: UNABLE TO FIND QUIZ ID " + req.params.id, 404);
+        res.send("ERROR: UNABLE TO FIND QUESTION ID " + req.params.id, 404);
     }
 })
 
@@ -59,9 +59,9 @@ router.put('/:id',async (req, res) => {
         })
 
         console.log('this',questionToUpdate)
-        res.send('successfully updated quiz ' + id);
+        res.send('successfully updated question ' + id);
     } catch (e) {
-        res.send("ERROR: UNABLE TO UPDATE QUIZ ID " + req.params.id, 404);
+        res.send("ERROR: UNABLE TO UPDATE QUESTION ID " + req.params.id, 404);
     }
 })
 
@@ -72,9 +72,9 @@ router.delete('/:id',async (req, res) => {
         await Questions.destroy({
             where: { id }
         })
-        res.send('successfully deleted quiz ' + id);
+        res.send('successfully deleted question ' + id);
     } catch (e) {
-        res.send("ERROR: UNABLE TO DELETE QUIZ ID " + req.params.id, 404);
+        res.send("ERROR: UNABLE TO DELETE QUESTION ID " + req.params.id, 404);
     }
 })
 
