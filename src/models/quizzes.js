@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: Sequelize.INTEGER
     },
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    weight: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Quizzes',
