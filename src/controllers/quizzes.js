@@ -13,27 +13,19 @@ router.use(bodyParser.json())
 router.post('/',async (req, res) => {
 
     try {
-
         const {name} = req.body;
         const quiz = await Quiz.create({ name })
         res.json(quiz);
-
-        // quizzes.push(
-        //     {
-        //         id: Number(id),
-        //         name: name
-        //     }
-        //
-        // );
         res.send('successfully created');
     } catch (e) {
         res.send("ERROR: UNABLE TO FIND QUIZ ID " + req.params.id, 404);
     }
 })
 
-router.get('/',(req,res) =>{
+router.get('/',async (req, res) => {
     // res.send('get quizzes');
-    res.json(quizzes);
+    const quiz = await Quiz.findAll()
+    res.send("Got all quizzes");
 })
 
 

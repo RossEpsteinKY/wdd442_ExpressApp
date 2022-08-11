@@ -10,23 +10,27 @@ app.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
 
-router.get('/',(req,res) =>{
+router.get('/',async (req, res) => {
     // res.send('get questions');
+    const questions = await Questions.findAll()
+
     res.json(questions);
 })
 
-router.get('/:id',(req,res) =>{
+router.get('/:id',async (req, res) => {
 
     try {
         const id = req.params.id;
-        const quiz = questions.find(quiz => quiz.id == id )
+        const question = await Questions.findByPk(id)
 
-        if(!quiz){
+
+
+        if (!question) {
             throw new Error('QUIZ NOT FOUND');
         }
-        res.json(quiz);
-    }
-    catch (e) {
+        res.json(question);
+        return;
+    } catch (e) {
         res.send("ERROR: UNABLE TO FIND QUIZ ID " + req.params.id, 404);
     }
 })
