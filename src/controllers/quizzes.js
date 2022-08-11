@@ -3,16 +3,40 @@ const router = express.Router();
 const {request, response} = require("express");
 const {param} = require("express/lib/router");
 const bodyParser = require('body-parser');
+const { Quiz } = require('../models');
 const app = express();
-let quizzes = require('../models/quizzes.model');
+let quizzes = require('../../old_models/quizzes.model');
 app.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
+
+router.post('/',async (req, res) => {
+
+    try {
+
+        const {name} = req.body;
+        const quiz = await Quiz.create({ name })
+        res.json(quiz);
+
+        // quizzes.push(
+        //     {
+        //         id: Number(id),
+        //         name: name
+        //     }
+        //
+        // );
+        res.send('successfully created');
+    } catch (e) {
+        res.send("ERROR: UNABLE TO FIND QUIZ ID " + req.params.id, 404);
+    }
+})
 
 router.get('/',(req,res) =>{
     // res.send('get quizzes');
     res.json(quizzes);
 })
+
+
 
 router.get('/:id',(req,res) =>{
     try {
@@ -30,24 +54,7 @@ router.get('/:id',(req,res) =>{
 })
 
 
-router.post('/',(req,res) =>{
-    const { id, name } = req.body;
-    console.log('body',req.body);
-    try {
 
-        quizzes.push(
-            {
-                id: Number(id),
-                name: name
-            }
-
-        );
-        res.send('successfully updated');
-    }
-    catch (e) {
-        res.send("ERROR: UNABLE TO FIND QUIZ ID " + req.params.id, 404);
-    }
-})
 
 
 router.put('/:id',(req,res) =>{

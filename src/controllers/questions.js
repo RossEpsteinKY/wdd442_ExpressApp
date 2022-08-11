@@ -4,7 +4,8 @@ const {request, response} = require("express");
 const {param} = require("express/lib/router");
 const bodyParser = require('body-parser');
 const app = express();
-let questions = require('../models/questions.model');
+let questions = require('../../old_models/questions.model');
+const {Questions} = require("../models");
 app.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
@@ -15,6 +16,7 @@ router.get('/',(req,res) =>{
 })
 
 router.get('/:id',(req,res) =>{
+
     try {
         const id = req.params.id;
         const quiz = questions.find(quiz => quiz.id == id )
@@ -30,21 +32,16 @@ router.get('/:id',(req,res) =>{
 })
 
 
-router.post('/',(req,res) =>{
-    const { id, question } = req.body;
-    console.log('body',req.body);
+router.post('/',async (req, res) => {
+    const {id, question} = req.body.question;
+    console.log('body', req.body);
     try {
 
-        questions.push(
-            {
-                id: Number(id),
-                question: question
-            }
-
-        );
-        res.send('successfully updated');
-    }
-    catch (e) {
+        const {question} = req.body;
+        const questions = await Questions.create({question})
+        // res.json(quiz);
+        res.send('successfully created');
+    } catch (e) {
         res.send("ERROR: UNABLE TO FIND QUIZ ID " + req.params.id, 404);
     }
 })

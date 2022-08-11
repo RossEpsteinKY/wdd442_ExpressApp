@@ -4,7 +4,7 @@ const {request, response} = require("express");
 const {param} = require("express/lib/router");
 const bodyParser = require('body-parser');
 const app = express();
-let choices = require('../models/choices.model');
+let choices = require('../../old_models/choices.model');
 app.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
