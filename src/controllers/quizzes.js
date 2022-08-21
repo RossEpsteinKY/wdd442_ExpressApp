@@ -75,7 +75,7 @@ router.post('/',async (req, res) => {
         const quiz = await Quizzes.create(name)
         // res.json(quiz);
         // res.send('successfully created');
-        res.redirect(`quizzes/${quiz.id}`)
+        res.redirect(`/quizzes/${quiz.id}/show`)
     } catch (e) {
         res.send("ERROR: UNABLE TO FIND QUIZ ID " + req.params.id, 404);
     }
@@ -132,14 +132,14 @@ router.delete('/:id',async (req, res) => {
     }
 })
 
-router.delete('/:id/delete',async (req, res) => {
+router.get('/:id/delete',async (req, res) => {
     const id = Number(req.params.id);
     console.log('id',id);
     try {
         await Quizzes.destroy({
             where: { id }
         })
-        res.send('successfully deleted quiz ' + id);
+        res.redirect('/quizzes');
     } catch (e) {
         res.send("ERROR: UNABLE TO DELETE QUIZ ID " + req.params.id, 404);
     }

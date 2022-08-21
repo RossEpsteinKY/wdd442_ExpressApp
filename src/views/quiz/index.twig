@@ -2,11 +2,12 @@
 {% block main_content %}
     <h1>List of Quizzes</h1>
     <ul>
+        <a href="/quizzes/new">Add New Quiz</a>
         {% for quiz in quizzes %}
             <li><a href="/quizzes/{{ quiz.id }}/show"> {{ quiz.name }}</a></li>
             <a href="/quizzes/{{ quiz.id }}/edit">Edit</a>
             |
-            <a href="/quizzes/{{ quiz.id }}/delete">Delete</a>
+            <a href="/quizzes/{{ quiz.id }}/delete" methods="del">Delete</a>
         {% endfor %}
     </ul>
 {% endblock %}
