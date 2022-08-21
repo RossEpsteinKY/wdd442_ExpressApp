@@ -9,8 +9,12 @@ const quizzesController = require('./src/controllers/quizzes');
 const questionController = require('./src/controllers/questions');
 const choicesController = require('./src/controllers/choices');
 
+app.set('views',__dirname + '/src/views');
+app.set('view engine','twig');
+
 app.get('/',(req,res) =>{
-    res.send("HOMEPAGE");
+    // res.send("HOMEPAGE");
+    res.render('home');
 })
 
 app.use('/quizzes', quizzesController);
