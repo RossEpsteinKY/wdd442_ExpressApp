@@ -112,7 +112,8 @@ router.post('/:id/edit',async (req, res) => {
         })
 
         console.log('this',quizToUpdate)
-        res.send('successfully updated quiz ' + id);
+        // res.send('successfully updated quiz ' + id);
+        res.redirect(`/quizzes/${id}/show`);
     } catch (e) {
         res.send("ERROR: UNABLE TO UPDATE QUIZ ID " + req.params.id, 404);
     }
