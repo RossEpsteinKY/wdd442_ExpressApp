@@ -14,7 +14,8 @@ router.get('/',async (req, res) => {
     // res.send('get quizzes');
     const quizzes = await Quizzes.findAll()
 
-    res.json(quizzes);
+    res.render('quiz-list',{quizzes});
+
 })
 
 router.get('/:id',async (req, res) => {
@@ -25,7 +26,7 @@ router.get('/:id',async (req, res) => {
         if (!quiz) {
             throw new Error('QUIZ NOT FOUND');
         }
-        res.json(quiz);
+        res.render('quiz',{quiz});
         return;
     } catch (e) {
         res.send("ERROR: UNABLE TO FIND QUIZ ID " + req.params.id, 404);
