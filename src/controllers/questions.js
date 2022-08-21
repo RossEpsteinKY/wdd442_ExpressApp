@@ -15,6 +15,10 @@ router.get('/',async (req, res) => {
     res.render('questions/index',{questions});
 })
 
+router.get('/new',(req,res) => {
+    res.render('questions/create')
+})
+
 router.get('/:id',async (req, res) => {
 
     try {
@@ -36,14 +40,29 @@ router.post('/',async (req, res) => {
     try {
 
         const {question} = req.body;
+        console.log('question',question);
         const questions = await Questions.create({question})
         // res.json(question);
-        res.send('successfully created');
+        res.redirect(`/questions/${questions.id}/show`)
     } catch (e) {
         res.send("ERROR: UNABLE TO FIND QUESTION ID " + req.params.id, 404);
     }
 })
 
+router.get('/:id/edit',async (req, res) => {
+
+    try {
+        const id = req.params.id;
+        const question = await Questions.findByPk(id)
+        if (!question) {
+            throw new Error('QUESTION NOT FOUND');
+        }
+        res.render('questions/edit',{question});
+        return;
+    } catch (e) {
+        res.send("ERROR: UNABLE TO FIND QUIZ ID " + req.params.id, 404);
+    }
+})
 
 router.put('/:id',async (req, res) => {
 
@@ -86,6 +105,25 @@ router.get('/:id/delete',async (req, res) => {
         res.redirect('/questions');
     } catch (e) {
         res.send("ERROR: UNABLE TO DELETE QUIZ ID " + req.params.id, 404);
+    }
+})
+
+router.post('/:id/edit',async (req, res) => {
+
+    try {
+        const id = Number(req.params.id);
+        console.log('body', req.body);
+        const question = req.body.question;
+
+        const questionToUpdate = await Questions.update({ question }, {
+            where: { id }
+        })
+
+        console.log('this',questionToUpdate)
+        // res.send('successfully updated quiz ' + id);
+        res.redirect(`/questions/${id}/show`);
+    } catch (e) {
+        res.send("ERROR: UNABLE TO UPDATE QUIZ ID " + req.params.id, 404);
     }
 })
 

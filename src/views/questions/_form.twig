@@ -1,11 +1,11 @@
-{% if quiz %}
-<form action="/quizzes/{{ quiz.id }}/edit" method="post">
+{% if question %}
+<form action="/questions/{{ question.id }}/edit" method="post">
 {%  else %}
-<form action="/quizzes/{{ quiz.id }}" method="post">
+<form action="/questions/{{ question.id }}" method="post">
     {% endif %}
     <div>
-        <label for="name">Name: </label>
-        <input id="name" type="text" name="name">
+        <label for="question">Question: </label>
+        <input id="question" type="text" name="question">
     </div>
-    <input type="submit" value="Save Quiz">
+    <input type="submit" value="Save Question">
 </form>
