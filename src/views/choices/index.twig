@@ -2,18 +2,12 @@
 {% block main_content %}
     <h1>List of Questions</h1>
     <ul>
-        <a href="/">HOME</a>
-        <br>
-        <br>
         <a href="/questions/new">Add New Question</a>
-        <br>
         {% for question in questions %}
-            <br>
             <li><a href="/questions/{{ question.id }}/show"> {{ question.question }}</a></li>
             <a href="/questions/{{ question.id }}/edit">Edit</a>
             |
             <a href="/questions/{{ question.id }}/delete" methods="del">Delete</a>
-            <br>
         {% endfor %}
     </ul>
 {% endblock %}

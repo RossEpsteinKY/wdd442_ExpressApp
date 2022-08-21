@@ -1,0 +1,5 @@
+{%  extends '../layouts/_default.twig' %}
+{% block main_content %}
+    <h1>Edit {{ question.question }}</h1>
+    {%  include 'questions/_form.twig' with {question: question} %}
+{% endblock %}
