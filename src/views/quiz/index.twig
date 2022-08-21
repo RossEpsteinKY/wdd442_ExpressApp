@@ -3,7 +3,7 @@
     <h1>List of Quizzes</h1>
     <ul>
         {% for quiz in quizzes %}
-            <li>{{ quiz.name }}</li>
+            <li><a href="/quizzes/{{ quiz.id }}/show"> {{ quiz.name }}</a></li>
             <a href="/quizzes/{{ quiz.id }}/edit">Edit</a>
             |
             <a href="/quizzes/{{ quiz.id }}/delete">Delete</a>
