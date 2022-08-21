@@ -5,7 +5,7 @@ const {param} = require("express/lib/router");
 const bodyParser = require('body-parser');
 const app = express();
 let choices = require('../../old_models/choices.model');
-const {Choices} = require("../models");
+const {Choices, Quizzes} = require("../models");
 app.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
@@ -15,7 +15,23 @@ router.get('/',async (req, res) => {
     // res.send('get choices');
     const choices = await Choices.findAll()
 
-    res.json(choices);
+    res.render('choices/index',{choices});
+})
+
+router.get('/:id/show',async (req, res) => {
+
+    try {
+        const id = req.params.id;
+        const choice = await Choices.findByPk(id)
+        console.log(choice);
+        if (!choice) {
+            throw new Error('CHOICE NOT FOUND');
+        }
+        res.render('choices/show',{choice});
+        return;
+    } catch (e) {
+        res.send("ERROR: UNABLE TO FIND CHOICE ID " + req.params.id, 404);
+    }
 })
 
 router.get('/:id',async (req, res) => {
