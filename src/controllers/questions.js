@@ -5,16 +5,14 @@ const {param} = require("express/lib/router");
 const bodyParser = require('body-parser');
 const app = express();
 let questions = require('../../old_models/questions.model');
-const {Questions} = require("../models");
+const {Questions, Quizzes} = require("../models");
 app.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
 
 router.get('/',async (req, res) => {
-    // res.send('get questions');
     const questions = await Questions.findAll()
-
-    res.json(questions);
+    res.render('questions/index',{questions});
 })
 
 router.get('/:id',async (req, res) => {
@@ -78,6 +76,33 @@ router.delete('/:id',async (req, res) => {
     }
 })
 
+router.get('/:id/delete',async (req, res) => {
+    const id = Number(req.params.id);
+    console.log('id',id);
+    try {
+        await Questions.destroy({
+            where: { id }
+        })
+        res.redirect('/questions');
+    } catch (e) {
+        res.send("ERROR: UNABLE TO DELETE QUIZ ID " + req.params.id, 404);
+    }
+})
+
+router.get('/:id/show',async (req, res) => {
+
+    try {
+        const id = req.params.id;
+        const question = await Questions.findByPk(id)
+        if (!question) {
+            throw new Error('QUESTION NOT FOUND');
+        }
+        res.render('questions/show',{question});
+        return;
+    } catch (e) {
+        res.send("ERROR: UNABLE TO FIND QUIZ ID " + req.params.id, 404);
+    }
+})
 module.exports = router;
 
 
