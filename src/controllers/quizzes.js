@@ -13,9 +13,11 @@ router.use(bodyParser.json())
 router.get('/',async (req, res) => {
     // res.send('get quizzes');
     const quizzes = await Quizzes.findAll()
+    res.render('quiz/index',{quizzes});
+})
 
-    res.render('quiz-list',{quizzes});
-
+router.get('/new',(req,res) => {
+    res.render('quiz/create')
 })
 
 router.get('/:id',async (req, res) => {
@@ -26,7 +28,23 @@ router.get('/:id',async (req, res) => {
         if (!quiz) {
             throw new Error('QUIZ NOT FOUND');
         }
-        res.render('quiz',{quiz});
+        res.render('quiz/quiz',{quiz});
+        return;
+    } catch (e) {
+        res.send("ERROR: UNABLE TO FIND QUIZ ID " + req.params.id, 404);
+    }
+})
+
+
+router.get('/:id/edit',async (req, res) => {
+
+    try {
+        const id = req.params.id;
+        const quiz = await Quizzes.findByPk(id)
+        if (!quiz) {
+            throw new Error('QUIZ NOT FOUND');
+        }
+        res.render('quiz/edit',{quiz});
         return;
     } catch (e) {
         res.send("ERROR: UNABLE TO FIND QUIZ ID " + req.params.id, 404);
@@ -39,9 +57,10 @@ router.post('/',async (req, res) => {
     try {
 
         const name = req.body;
-        const quizzes = await Quizzes.create(name)
+        const quiz = await Quizzes.create(name)
         // res.json(quiz);
-        res.send('successfully created');
+        // res.send('successfully created');
+        res.redirect(`quizzes/${quiz.id}`)
     } catch (e) {
         res.send("ERROR: UNABLE TO FIND QUIZ ID " + req.params.id, 404);
     }
