@@ -2,12 +2,18 @@
 {% block main_content %}
     <h1>List of Choices</h1>
     <ul>
+        <a href="/">HOME</a>
+        <br>
+        <br>
         <a href="/choices/new">Add New Choice</a>
+        <br>
         {% for choice in choices %}
+            <br>
             <li><a href="/choices/{{ choice.id }}/show"> {{ choice.choice }}</a></li>
             <a href="/choices/{{ choice.id }}/edit">Edit</a>
             |
             <a href="/choices/{{ choice.id }}/delete" methods="del">Delete</a>
+            <br>
         {% endfor %}
     </ul>
 {% endblock %}
