@@ -3,6 +3,7 @@ const router = express.Router();
 const {request, response} = require("express");
 const {param} = require("express/lib/router");
 const bodyParser = require('body-parser');
+const querystring = require("querystring");
 const app = express();
 
 router.get('/login', (req,res) => {
@@ -22,7 +23,7 @@ router.get('/callback', async (req, res) => {
             code
         }
     }, async (error, response,body) => {
-        console.log(body);
+        const { access_token } = querystring.parse(body);
     })
 });
 
