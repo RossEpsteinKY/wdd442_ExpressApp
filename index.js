@@ -4,6 +4,7 @@ const {request, response} = require("express");
 const {param} = require("express/lib/router");
 const bodyParser = require('body-parser');
 const app = express();
+require('dotenv').config();
 
 const quizzesController = require('./src/controllers/quizzes');
 const questionController = require('./src/controllers/questions');

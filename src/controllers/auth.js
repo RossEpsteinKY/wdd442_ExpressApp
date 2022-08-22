@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const {request, response} = require("express");
+const {response} = require("express");
+
 const {param} = require("express/lib/router");
 const bodyParser = require('body-parser');
 const querystring = require("querystring");
+const request = require("request");
 const app = express();
 
 router.get('/login', (req,res) => {
@@ -14,8 +16,9 @@ router.get('/callback', async (req, res) => {
     // res.render('auth/login');
 
     const {code} = req.query;
-
+    console.log('id',process.env.client_id);
     await request({
+
         uri: 'https://github.com/login/oauth/access_token',
         qs: {
             client_id: process.env.client_id,
@@ -24,7 +27,8 @@ router.get('/callback', async (req, res) => {
         }
     }, async (error, response,body) => {
         const { access_token } = querystring.parse(body);
-    })
+        console.log('token', access_token);
+    });
 });
 
 module.exports = router;
