@@ -11,6 +11,7 @@ const quizzesController = require('./src/controllers/quizzes');
 const questionController = require('./src/controllers/questions');
 const choicesController = require('./src/controllers/choices');
 const authController = require('./src/controllers/auth');
+const { isAuthenticated } = require("./src/middleware/auth");
 
 
 
@@ -18,7 +19,7 @@ app.use(session({
     saveUninitialized: false,
     secret: "T3s7!ng",
     cookie: {
-        maxAge: 6000,
+        maxAge: 6000000,
     }
 }))
 
@@ -37,7 +38,7 @@ app.use('/questions', questionController);
 app.use('/choices', choicesController);
 app.use('/auth', authController);
 
-app.get('/', async  (req,res) => {
+app.get('/', isAuthenticated, async  (req,res) => {
     console.log('TOKEN', req.session.access_token);
     res.render('home');
 });

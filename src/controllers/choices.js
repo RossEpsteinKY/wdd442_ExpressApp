@@ -6,23 +6,24 @@ const bodyParser = require('body-parser');
 const app = express();
 let choices = require('../../old_models/choices.model');
 const {Choices, Quizzes} = require("../models");
+const {isAuthenticated} = require("../middleware/auth");
 app.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
 
 
-router.get('/',async (req, res) => {
+router.get('/', isAuthenticated,async (req, res) => {
     // res.send('get choices');
     const choices = await Choices.findAll()
 
     res.render('choices/index',{choices});
 })
 
-router.get('/new',(req,res) => {
+router.get('/new', isAuthenticated, async (req,res) => {
     res.render('choices/create')
 })
 
-router.get('/:id/show',async (req, res) => {
+router.get('/:id/show',isAuthenticated, async (req, res) => {
 
     try {
         const id = req.params.id;
@@ -38,7 +39,7 @@ router.get('/:id/show',async (req, res) => {
     }
 })
 
-router.get('/:id',async (req, res) => {
+router.get('/:id', isAuthenticated, async (req, res) => {
 
     try {
         const id = req.params.id;
@@ -54,7 +55,7 @@ router.get('/:id',async (req, res) => {
 })
 
 
-router.post('/',async (req, res) => {
+router.post('/', isAuthenticated, async (req, res) => {
     console.log('body', req.body);
     try {
 
@@ -66,7 +67,7 @@ router.post('/',async (req, res) => {
         res.send("ERROR: UNABLE TO FIND CHOICE ID " + req.params.id, 404);
     }
 })
-router.get('/:id/edit',async (req, res) => {
+router.get('/:id/edit',isAuthenticated, async (req, res) => {
 
     try {
         const id = req.params.id;
@@ -81,7 +82,7 @@ router.get('/:id/edit',async (req, res) => {
     }
 })
 
-router.post('/:id/edit',async (req, res) => {
+router.post('/:id/edit',isAuthenticated, async (req, res) => {
 
     try {
         const id = Number(req.params.id);
@@ -102,7 +103,7 @@ router.post('/:id/edit',async (req, res) => {
 })
 
 
-router.put('/:id',async (req, res) => {
+router.put('/:id', isAuthenticated, async (req, res) => {
 
     try {
         const id = Number(req.params.id);
@@ -120,7 +121,7 @@ router.put('/:id',async (req, res) => {
     }
 })
 
-router.delete('/:id',async (req, res) => {
+router.delete('/:id', isAuthenticated,async (req, res) => {
     const id = Number(req.params.id);
     console.log('id',id);
     try {
@@ -133,7 +134,7 @@ router.delete('/:id',async (req, res) => {
     }
 })
 
-router.get('/:id/delete',async (req, res) => {
+router.get('/:id/delete',isAuthenticated, async (req, res) => {
     const id = Number(req.params.id);
     console.log('id',id);
     try {

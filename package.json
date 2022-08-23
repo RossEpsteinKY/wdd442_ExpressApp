@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon -e js,twig --watch src",
+    "dev": "nodemon -e js,--watch twig --watch src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

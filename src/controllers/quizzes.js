@@ -4,23 +4,24 @@ const {request, response} = require("express");
 const {param} = require("express/lib/router");
 const bodyParser = require('body-parser');
 const { Quizzes } = require('../models');
+const {isAuthenticated} = require("../middleware/auth");
 const app = express();
 // let quizzes = require('../../old_models/quizzes.model');
 app.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
 
-router.get('/',async (req, res) => {
+router.get('/', isAuthenticated, async (req, res) => {
     // res.send('get quizzes');
     const quizzes = await Quizzes.findAll()
     res.render('quiz/index',{quizzes});
 })
 
-router.get('/new',(req,res) => {
+router.get('/new', isAuthenticated, (req,res) => {
     res.render('quiz/create')
 })
 
-router.get('/:id',async (req, res) => {
+router.get('/:id', isAuthenticated, async (req, res) => {
 
     try {
         const id = req.params.id;
@@ -36,7 +37,7 @@ router.get('/:id',async (req, res) => {
 })
 
 
-router.get('/:id/show',async (req, res) => {
+router.get('/:id/show', isAuthenticated, async (req, res) => {
 
     try {
         const id = req.params.id;
@@ -51,7 +52,7 @@ router.get('/:id/show',async (req, res) => {
     }
 })
 
-router.get('/:id/edit',async (req, res) => {
+router.get('/:id/edit', isAuthenticated, async (req, res) => {
 
     try {
         const id = req.params.id;
@@ -67,7 +68,7 @@ router.get('/:id/edit',async (req, res) => {
 })
 
 
-router.post('/',async (req, res) => {
+router.post('/', isAuthenticated, async (req, res) => {
     console.log('body', req.body);
     try {
 
@@ -82,7 +83,7 @@ router.post('/',async (req, res) => {
 })
 
 
-router.put('/:id',async (req, res) => {
+router.put('/:id', isAuthenticated, async (req, res) => {
 
     try {
         const id = Number(req.params.id);
@@ -100,7 +101,7 @@ router.put('/:id',async (req, res) => {
     }
 })
 
-router.post('/:id/edit',async (req, res) => {
+router.post('/:id/edit', isAuthenticated, async (req, res) => {
 
     try {
         const id = Number(req.params.id);
@@ -119,7 +120,7 @@ router.post('/:id/edit',async (req, res) => {
     }
 })
 
-router.delete('/:id',async (req, res) => {
+router.delete('/:id', isAuthenticated, async (req, res) => {
     const id = Number(req.params.id);
     console.log('id',id);
     try {
@@ -132,7 +133,7 @@ router.delete('/:id',async (req, res) => {
     }
 })
 
-router.get('/:id/delete',async (req, res) => {
+router.get('/:id/delete', isAuthenticated, async (req, res) => {
     const id = Number(req.params.id);
     console.log('id',id);
     try {

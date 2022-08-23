@@ -4,22 +4,23 @@ const {request, response} = require("express");
 const {param} = require("express/lib/router");
 const bodyParser = require('body-parser');
 const app = express();
+const { isAuthenticated } = require('../middleware/auth');
 let questions = require('../../old_models/questions.model');
 const {Questions, Quizzes} = require("../models");
 app.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
 
-router.get('/',async (req, res) => {
+router.get('/',isAuthenticated, async (req, res) => {
     const questions = await Questions.findAll()
     res.render('questions/index',{questions});
 })
 
-router.get('/new',(req,res) => {
+router.get('/new', isAuthenticated, (req,res) => {
     res.render('questions/create')
 })
 
-router.get('/:id',async (req, res) => {
+router.get('/:id', isAuthenticated, async (req, res) => {
 
     try {
         const id = req.params.id;
@@ -35,7 +36,7 @@ router.get('/:id',async (req, res) => {
 })
 
 
-router.post('/',async (req, res) => {
+router.post('/', isAuthenticated, async (req, res) => {
     console.log('body', req.body);
     try {
 
@@ -49,7 +50,7 @@ router.post('/',async (req, res) => {
     }
 })
 
-router.get('/:id/edit',async (req, res) => {
+router.get('/:id/edit', isAuthenticated, async (req, res) => {
 
     try {
         const id = req.params.id;
@@ -64,7 +65,7 @@ router.get('/:id/edit',async (req, res) => {
     }
 })
 
-router.put('/:id',async (req, res) => {
+router.put('/:id', isAuthenticated, async (req, res) => {
 
     try {
         const id = Number(req.params.id);
@@ -82,7 +83,7 @@ router.put('/:id',async (req, res) => {
     }
 })
 
-router.delete('/:id',async (req, res) => {
+router.delete('/:id', isAuthenticated, async (req, res) => {
     const id = Number(req.params.id);
     console.log('id',id);
     try {
@@ -95,7 +96,7 @@ router.delete('/:id',async (req, res) => {
     }
 })
 
-router.get('/:id/delete',async (req, res) => {
+router.get('/:id/delete', isAuthenticated, async (req, res) => {
     const id = Number(req.params.id);
     console.log('id',id);
     try {
@@ -108,7 +109,7 @@ router.get('/:id/delete',async (req, res) => {
     }
 })
 
-router.post('/:id/edit',async (req, res) => {
+router.post('/:id/edit', isAuthenticated, async (req, res) => {
 
     try {
         const id = Number(req.params.id);
@@ -127,7 +128,7 @@ router.post('/:id/edit',async (req, res) => {
     }
 })
 
-router.get('/:id/show',async (req, res) => {
+router.get('/:id/show', isAuthenticated, async (req, res) => {
 
     try {
         const id = req.params.id;

@@ -32,8 +32,7 @@ router.get('/callback', async (req, res) => {
             code
         }
     }, async (error, response,body) => {
-        const { access_token } = querystring.parse(body);
-        console.log('access token',access_token);
+        const { access_token } = querystring.parse(body);;
         req.session.access_token = access_token;
         res.redirect('/');
     });
