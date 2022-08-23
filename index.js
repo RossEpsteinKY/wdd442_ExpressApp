@@ -26,10 +26,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.set('views',__dirname + '/src/views');
 app.set('view engine','twig');
 
-app.get('/',(req,res) =>{
-    // res.send("HOMEPAGE");
-    res.render('home');
-})
+// app.get('/',(req,res) =>{
+//     // res.send("HOMEPAGE");
+//     res.render('home');
+// })
 
 
 app.use('/quizzes', quizzesController);
@@ -39,7 +39,7 @@ app.use('/auth', authController);
 
 app.get('/', async  (req,res) => {
     console.log('TOKEN', req.session.access_token);
-    res.render('home/home');
+    res.render('home');
 });
 
 app.listen(5000);

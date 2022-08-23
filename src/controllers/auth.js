@@ -13,9 +13,9 @@ router.get('/login', (req,res) => {
 });
 
 router.get('/deleteSession', (req,res) => {
-    console.log('is token empty',req.session.access_token);
     req.session.destroy();
-    console.log(req.session.access_token == undefined ? 'token is now empty ' : "token found")
+    res.redirect('/auth/login');
+
 });
 
 router.get('/callback', async (req, res) => {
