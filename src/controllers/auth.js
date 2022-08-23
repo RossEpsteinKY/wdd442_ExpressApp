@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {response} = require("express");
-
+const session = require('express-session');
 const {param} = require("express/lib/router");
 const bodyParser = require('body-parser');
 const querystring = require("querystring");
@@ -10,6 +10,12 @@ const app = express();
 
 router.get('/login', (req,res) => {
     res.render('auth/login');
+});
+
+router.get('/deleteSession', (req,res) => {
+    console.log('is token empty',req.session.access_token);
+    req.session.destroy();
+    console.log(req.session.access_token == undefined ? 'token is now empty ' : "token found")
 });
 
 router.get('/callback', async (req, res) => {
@@ -27,7 +33,9 @@ router.get('/callback', async (req, res) => {
         }
     }, async (error, response,body) => {
         const { access_token } = querystring.parse(body);
-        console.log('token', access_token);
+        console.log('access token',access_token);
+        req.session.access_token = access_token;
+        res.redirect('/');
     });
 });
 
